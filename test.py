@@ -85,7 +85,7 @@ class Station():
             check_mac = check_mac.decode("utf-8")
             for line in check_mac.split("\n"):
                 if "MAC: " in line:
-                    self.mac = line.split("MAC: ")[1]
+                    self.mac = line.split("MAC: ")[1][:-1]
                     addTextToLabel(self.explanation, line)
                     return 0
         except subprocess.CalledProcessError as check_mac_error:
@@ -122,29 +122,19 @@ class Station():
 
     ### Organize and log status of each Station instance
     # TODO: log errors correctly with serial number for identification
-    def log_run(self, flash, verify, comm):
+    def log_run(self):
         # Only log is some sort of upload was attempted
-        if not flash:
-            full_date = str(datetime.datetime.now())
-            log_str = full_date + " " + self.sernum + " " + self.version + " " + device + " "
-            # No Failures
-            if(not flash and not verify and not comm):
-                log_str += str(self.program.get()) + " " + str(self.verify.get()) + " " + str(self.communicate.get())
-                log_filename = r"Log\success.txt"
-            # Some form of failure
-            else:
-                log_str += "ERROR- "
-                if flash:
-                    log_str = ""
-                if verify:
-                    log_str += "Verification "
-                if comm:
-                    log_str += "Communication "
-                log_filename = r"Log\fail.txt"
-            log_str += "\n"
-            with open(log_filename, 'a+',encoding='utf-8') as log:
-                log.write(log_str)
-                log.close()
+        log_str = "|" + str(datetime.datetime.now()) + " " + str(self.mac)
+        if self.flash_fail:
+            log_str += "  FAIL  |\n"
+            #log_filename = r"Log\fail.txt"
+        else:
+            log_str += " SUCCESS|\n"
+            #log_filename = r"Log\success.txt"
+        log_filename = r"Log\log.txt"
+        with open(log_filename, 'a+',encoding='utf-8') as log:
+            log.write(log_str)
+            log.close()
 
     ### Stops and configures progress bar to correct style
     def stopProgressBar(self, fail):
@@ -170,7 +160,7 @@ class Station():
         arduino.write(self.side.encode())
         if not self.mac_fail:
             self.flash_fail = self.runFlashCommand()
-        # stat.log_run(stat.flash_fail, stat.verify_fail, stat.test_fail)
+            self.log_run()
         overallFail = self.flash_fail + self.mac_fail
         self.stopProgressBar(overallFail)
         # Update successful iterations

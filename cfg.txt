@@ -1,2 +1,2 @@
 Ports in order from left to right:
-COM15 l
+COM14 l
