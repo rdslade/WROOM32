@@ -1,0 +1,13 @@
+#|    Mac Address | Pass/Fail | Firmware Loaded -- Details
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v3.1.0
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v3.1.0
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v3.1.0
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v3.1.0
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v3.1.0
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v3.1.0
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v3.1.0
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v3.1.0
+1 a0:20:a6:33:77:11  SUCCESS   Zircon-la6-v3.1.0
+2 a0:20:a6:32:95:d5  SUCCESS   Zircon-la6-v3.1.0
+3 a0:20:a6:32:db:b7  SUCCESS   Zircon-la6-v3.1.0
+4 a0:20:a6:32:cf:78  SUCCESS   Zircon-la6-v3.1.0

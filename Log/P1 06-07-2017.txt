@@ -1,0 +1,25 @@
+#|    Mac Address | Pass/Fail | Firmware Loaded -- Details
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  FAIL      Zircon-la6-v2.0.235 -- See 5c-cf-7f-ec-96-95.txt
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v2.0.235
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v2.0.235
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v2.0.235
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v2.0.235
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235
+1 5c:cf:7f:08:22:47  SUCCESS   Zircon-la6-v2.0.235
+2 5c:cf:7f:08:21:b6  SUCCESS   Zircon-la6-v2.0.235
+3 5c:cf:7f:ec:96:95  SUCCESS   Zircon-la6-v2.0.235
+4 5c:cf:7f:ec:96:7f  SUCCESS   Zircon-la6-v2.0.235

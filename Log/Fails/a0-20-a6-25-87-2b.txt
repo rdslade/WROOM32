@@ -1,0 +1,5 @@
+b'esptool.py v1.3
+Connecting...
+
+A fatal error occurred: Timed out waiting for packet header
+' 

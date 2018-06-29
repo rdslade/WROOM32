@@ -1,0 +1,6 @@
+0x0 boot_v1.5.bin
+0x1000 user1.bin
+0x81000 user2.bin
+0x7e000 master_device_key.bin
+0x3fc000 esp_init_data_default.bin
+0x3fe000 blank.bin

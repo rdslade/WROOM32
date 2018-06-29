@@ -1,0 +1,175 @@
+b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b'esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Timed out waiting for packet header
+' b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xff')
+" b'esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Timed out waiting for packet header
+' b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xff')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xff')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xff')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'I')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfd')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b'esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Timed out waiting for packet header
+' b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfd')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xf9')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xf9')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfd')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfe')
+" b"esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Invalid head of packet (b'\\xfd')
+" b'esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+
+A fatal error occurred: Timed out waiting for packet header
+' 

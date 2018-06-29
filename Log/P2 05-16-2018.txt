@@ -1,0 +1,5 @@
+#|    Mac Address | Pass/Fail | Firmware Loaded -- Details
+1   SUCCESS   ESP8266-v.1.6.1
+2   SUCCESS   ESP8266-v.1.6.1
+3   SUCCESS   ESP8266-v.1.6.1
+4   SUCCESS   ESP8266-v.1.6.1

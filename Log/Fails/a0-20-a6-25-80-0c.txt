@@ -1,0 +1,8 @@
+b'esptool.py v1.3
+Connecting...
+Auto-detected Flash size: 16m
+Running Cesanta flasher stub...
+Flash params set to 0x0030
+Writing 4096 @ 0x0... 0 (0 %)
+A fatal error occurred: Invalid head of packet (b\'"\')
+' 
