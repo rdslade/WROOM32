@@ -42,7 +42,9 @@ class Station():
         self.parent = parent
 
         self.com = StringVar() #programming port
-        self.com.set(com_)
+        self.com.set(com_[0])
+
+        self.side = com_[1]
 
         self.frame = tk.Frame(self.parent)
         self.initComponents()
@@ -165,7 +167,7 @@ class Station():
         # Configre text files signifying programming ports
         self.mac_fail = self.runMACCommand()
         # Send message to arduino saying done
-        arduino.write("l".encode())
+        arduino.write(self.side.encode())
         if not self.mac_fail:
             self.flash_fail = self.runFlashCommand()
         # stat.log_run(stat.flash_fail, stat.verify_fail, stat.test_fail)
@@ -193,12 +195,15 @@ def addTextToLabel(label, textToAdd):
 def getCOMPorts():
     devices = []
     with open("cfg.txt", 'r+', encoding = 'utf-8') as cfg:
-        line = cfg.readline() #first line is ports
-        ports = []
-        for p in line.split():
+        cfg.readline()
+        port = []
+        for line in cfg.readlines():
+            p = line.split()
             # Add all COM ports associated with one device
-            if "COM" in p:
-                devices.append(p)
+            if "COM" in p[0]:
+                port.append(p[0])
+                port.append(p[1])
+                devices.append(port)
     return devices
 
 ### Reads counter file and returns value in the file
