@@ -1,0 +1,58 @@
+{
+  "build_id": "20180625-161427/???", 
+  "build_timestamp": "2018-06-25T16:14:27Z", 
+  "name": "SmartButton", 
+  "parts": {
+    "app": {
+      "addr": 65536, 
+      "cs_sha1": "3d0c2fa29da4c3aa6d0dc0ae6759dde18779e935", 
+      "encrypt": true, 
+      "size": 1208656, 
+      "src": "SmartButton.bin", 
+      "type": "app"
+    }, 
+    "boot": {
+      "addr": 4096, 
+      "cs_sha1": "26ea5fcf36ecdb9429fdd23a311dbc5ff0f2bd70", 
+      "encrypt": true, 
+      "size": 18224, 
+      "src": "bootloader.bin", 
+      "type": "boot"
+    }, 
+    "fs": {
+      "addr": 1638400, 
+      "cs_sha1": "e4c88c4765f13b9e806a0affa9dc386972f04a64", 
+      "fs_block_size": 4096, 
+      "fs_erase_size": 4096, 
+      "fs_page_size": 256, 
+      "fs_size": 262144, 
+      "size": 262144, 
+      "src": "fs.img", 
+      "type": "fs"
+    }, 
+    "nvs": {
+      "addr": 36864, 
+      "encrypt": false, 
+      "fill": 255, 
+      "size": 16384, 
+      "type": "nvs"
+    }, 
+    "otadata": {
+      "addr": 53248, 
+      "encrypt": true, 
+      "fill": 255, 
+      "size": 8192, 
+      "type": "otadata"
+    }, 
+    "pt": {
+      "addr": 32768, 
+      "cs_sha1": "dbd4148f29e309f1090a1e960b1b9e2de4a58f05", 
+      "encrypt": true, 
+      "size": 3072, 
+      "src": "partitions_mgos.bin", 
+      "type": "pt"
+    }
+  }, 
+  "platform": "esp32", 
+  "version": "1.51"
+}

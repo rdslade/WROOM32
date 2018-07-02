@@ -1,0 +1,4 @@
+0x1000 bootloader.bin
+0x8000 partitions_mgos.bin
+0x10000 SmartButton.bin
+0x190000 fs.img

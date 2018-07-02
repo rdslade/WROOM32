@@ -29,7 +29,7 @@ entryWidth = 8
 num_coms = 1
 baudrate = 115200
 lock = threading.Lock()
-device = "GC-CAN-USB-COM"
+device = "WROOM-xx"
 flash_map = [['0' for x in range(2)] for y in range(6)]
 ### class which details the specifics of each individual station programming
 ### threaded such that multiple Station instances can run simultaneously
@@ -191,9 +191,7 @@ def getCOMPorts():
             p = line.split()
             # Add all COM ports associated with one device
             if "COM" in p[0]:
-                port.append(p[0])
-                port.append(p[1])
-                devices.append(port)
+                devices.append(p)
     return devices
 
 ### Reads counter file and returns value in the file
@@ -248,9 +246,8 @@ class Application:
         s.configure("red.Horizontal.TProgressbar", foreground='red', background='red')
         s.configure("green.Horizontal.TProgressbar", foreground='green', background='green')
         self.parent = parent
-        self.parent.title("CAN-232 Programmer")
+        self.parent.title("WROOM-xx Programmer")
         self.stations = []
-        # stations_with_com = []
         self.frame = tk.Frame(self.parent)
         self.configureMenu()
         self.titleLabel = tk.Label(self.frame, text = 'Details/Instructions', font = 10)
@@ -367,6 +364,7 @@ are labelled with both COM ports listed in config.txt\n \
     ### Trigger function for START button which begins/continues each Station thread
     def startUpload(self):
         self.setupFirmwareMap()
+        arduino.write("N".encode())
         for stat in self.stations:
             if not stat.thread.is_alive():
                 stat.createNewThread()
