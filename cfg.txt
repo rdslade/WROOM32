@@ -1,5 +1,2 @@
-Ports in order from left to right:
-COM13 l
-COM14 l
-COM16 r
-COM17 r
+Ports in order from left to right
+COM15 l

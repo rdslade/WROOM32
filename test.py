@@ -33,7 +33,7 @@ device = "WROOM-xx"
 flash_map = [['0' for x in range(2)] for y in range(6)]
 ### class which details the specifics of each individual station programming
 ### threaded such that multiple Station instances can run simultaneously
-arduino = serial.Serial("COM18", 9600, timeout = .1)
+#arduino = serial.Serial("COM18", 9600, timeout = .1)
 sleep(3)
 class Station():
     def __init__(self, parent, com_, stat_num):
@@ -155,9 +155,11 @@ class Station():
         self.explanation.configure(text = "")
         self.mac_fail = self.flash_fail = 0
         # Configre text files signifying programming ports
+        test = serial.Serial(self.com.get())
+        test.close()
         self.mac_fail = self.runMACCommand()
         # Send message to arduino saying done
-        arduino.write(self.side.encode())
+        #arduino.write(self.side.encode())
         if not self.mac_fail:
             self.flash_fail = self.runFlashCommand()
             self.log_run()
@@ -166,7 +168,7 @@ class Station():
         # Update successful iterations
         if not overallFail:
             lock.acquire()
-            loaded.set(loaded.get() + 1)
+            loaded.set(getNumDevicesLoaded() + 1)
             lock.release()
             self.currentStatus.configure(text = "SUCCESS")
         else:
@@ -364,7 +366,7 @@ are labelled with both COM ports listed in config.txt\n \
     ### Trigger function for START button which begins/continues each Station thread
     def startUpload(self):
         self.setupFirmwareMap()
-        arduino.write("N".encode())
+        #arduino.write("N".encode())
         for stat in self.stations:
             if not stat.thread.is_alive():
                 stat.createNewThread()
