@@ -42,9 +42,7 @@ class Station():
         self.parent = parent
 
         self.com = StringVar() #programming port
-        self.com.set(com_[0])
-
-        self.side = com_[1]
+        self.com.set(com_)
 
         self.frame = tk.Frame(self.parent)
         self.initComponents()
@@ -79,7 +77,7 @@ class Station():
     ### Checks device is accessible and retrieves MAC
     def runMACCommand(self):
         self.currentStatus.configure(text = "Checking MAC")
-        mac_cmd = 'py -m esptool --port '+ self.com.get() +' read_mac'
+        mac_cmd = 'py -m esptool --port '+ self.com.get() +' --after no_reset read_mac'
         try:
             check_mac = subprocess.check_output(mac_cmd, shell=True, stderr=subprocess.STDOUT)
             check_mac = check_mac.decode("utf-8")
@@ -190,10 +188,9 @@ def getCOMPorts():
         cfg.readline()
         port = []
         for line in cfg.readlines():
-            p = line.split()
             # Add all COM ports associated with one device
-            if "COM" in p[0]:
-                devices.append(p)
+            if "COM" in line:
+                devices.append(line.split('\n')[0])
     return devices
 
 ### Reads counter file and returns value in the file
@@ -254,7 +251,7 @@ class Application:
         self.configureMenu()
         self.titleLabel = tk.Label(self.frame, text = 'Details/Instructions', font = 10)
         self.instructions = tk.Label(self.frame, text = '- Programming stations \
-are labelled with both COM ports listed in config.txt\n \
+are labelled with both COM ports listed in cfg.txt\n \
             - Click START to begin the upload', pady = 5)
         devices = getCOMPorts()
         # Size of window based on how many stations are present

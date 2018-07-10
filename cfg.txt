@@ -1,2 +1,3 @@
-Ports in order from left to right
-COM15 l
+List ports one per line
+COM20
+COM21
