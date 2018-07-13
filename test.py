@@ -29,7 +29,6 @@ entryWidth = 8
 num_coms = 1
 baudrate = 115200
 lock = threading.Lock()
-device = "WROOM-xx"
 flash_map = [['0' for x in range(2)] for y in range(6)]
 ### class which details the specifics of each individual station programming
 ### threaded such that multiple Station instances can run simultaneously
@@ -59,6 +58,7 @@ class Station():
         self.currentStatus = tk.Label(self.statusSpace, text = "", width = 25, pady = 10)
         self.progressBar = ttk.Progressbar(self.statusSpace, mode = 'determinate', length = 125)
         self.explanation = tk.Label(self.statusSpace, text = "", width = 25, pady = 10)
+        self.startTime = 0;
 
     ### Loads objects into correct places
     def packObjects(self):
@@ -77,7 +77,7 @@ class Station():
     ### Checks device is accessible and retrieves MAC
     def runMACCommand(self):
         self.currentStatus.configure(text = "Checking MAC")
-        mac_cmd = 'py -m esptool --port '+ self.com.get() +' --after no_reset read_mac'
+        mac_cmd = 'py -m esptool --port '+ self.com.get() +' --after no_reset --no-stub read_mac'
         try:
             check_mac = subprocess.check_output(mac_cmd, shell=True, stderr=subprocess.STDOUT)
             check_mac = check_mac.decode("utf-8")
@@ -87,6 +87,7 @@ class Station():
                     addTextToLabel(self.explanation, line)
                     return 0
         except subprocess.CalledProcessError as check_mac_error:
+            print(check_mac_error)
             addTextToLabel(self.explanation, "Unable to retrieve MAC")
             self.mac = ''
             return 1
@@ -110,6 +111,7 @@ class Station():
                     numFilesToWrite += 1
             if check_load.count("OK") == 4:
                 addTextToLabel(self.explanation, "\nSuccessful Load")
+                addTextToLabel(self.explanation, "\nFinished in " + str(round((time.time() - self.startTime), 2)) + " sec")
                 return 0
             else:
                 addTextToLabel(self.explanation, "\nFailed Load")
@@ -122,7 +124,7 @@ class Station():
     # TODO: log errors correctly with serial number for identification
     def log_run(self):
         # Only log is some sort of upload was attempted
-        log_str = "|" + str(datetime.datetime.now()) + " " + str(self.mac)
+        log_str = "|" + str(datetime.datetime.now()) + " " + str(self.mac) + " " + str(device.get())
         if self.flash_fail:
             log_str += "  FAIL  |\n"
             #log_filename = r"Log\fail.txt"
@@ -231,7 +233,7 @@ def getCOMProblem(e, stat):
 ### Station class and other widgets
 class Application:
     def __init__(self, parent):
-        global loaded, devicesLoaded
+        global loaded, devicesLoaded, device
         # self.communicationThread = threading.Thread(target = self.testMessages)
         # completeIndSend = IntVar()
         # completeIndSend.set(0)
@@ -240,6 +242,8 @@ class Application:
         loaded = IntVar()
         loaded.set(getNumDevicesLoaded())
         loaded.trace("w", updateDevicesLoaded)
+        device = StringVar()
+        device.set("WROOM-02")
         s = ttk.Style()
         s.theme_use('default')
         s.configure("red.Horizontal.TProgressbar", foreground='red', background='red')
@@ -265,10 +269,18 @@ are labelled with both COM ports listed in cfg.txt\n \
         # self.configureModeOptions()
         # self.configureDeviceOptions()
         self.configureFirmwareSelection()
+        self.createDeviceOptions()
         self.packObjects()
         # d[0] is common port; begin Station initalization at 1, passing in unique station id
         for d in range(0, len(devices)):
             self.stations.append(Station(root, devices[d], d))
+
+    def createDeviceOptions(self):
+        self.deviceFrame = tk.Frame(self.frame)
+        w02 = tk.Radiobutton(self.deviceFrame, text = "WROOM-02", variable = device, value = "WROOM-02")
+        w32 = tk.Radiobutton(self.deviceFrame, text = "WROOM-32", variable = device, value = "WROOM-32")
+        w02.pack()
+        w32.pack()
 
     ### Places objects on screen in correct format
     def packObjects(self):
@@ -280,6 +292,7 @@ are labelled with both COM ports listed in cfg.txt\n \
         self.start.pack()
         self.buttonFrame.pack(side = tk.LEFT, padx = 20)
         devicesLoaded.pack(side = tk.RIGHT)
+        self.deviceFrame.pack(side = tk.RIGHT, padx = 20)
 
     def configureFirmwareSelection(self):
         self.firmwareFrame = tk.Frame(self.frame)
@@ -365,6 +378,7 @@ are labelled with both COM ports listed in cfg.txt\n \
         self.setupFirmwareMap()
         #arduino.write("N".encode())
         for stat in self.stations:
+            stat.startTime = time.time()
             if not stat.thread.is_alive():
                 stat.createNewThread()
 
