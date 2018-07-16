@@ -87,7 +87,6 @@ class Station():
                     addTextToLabel(self.explanation, line)
                     return 0
         except subprocess.CalledProcessError as check_mac_error:
-            print(check_mac_error)
             addTextToLabel(self.explanation, "Unable to retrieve MAC")
             self.mac = ''
             return 1
@@ -155,8 +154,8 @@ class Station():
         self.explanation.configure(text = "")
         self.mac_fail = self.flash_fail = 0
         # Configre text files signifying programming ports
-        test = serial.Serial(self.com.get())
-        test.close()
+        # test = serial.Serial(self.com.get())
+        # test.close()
         self.mac_fail = self.runMACCommand()
         # Send message to arduino saying done
         #arduino.write(self.side.encode())
@@ -243,7 +242,7 @@ class Application:
         loaded.set(getNumDevicesLoaded())
         loaded.trace("w", updateDevicesLoaded)
         device = StringVar()
-        device.set("WROOM-02")
+        device.set(None)
         s = ttk.Style()
         s.theme_use('default')
         s.configure("red.Horizontal.TProgressbar", foreground='red', background='red')
@@ -326,7 +325,7 @@ are labelled with both COM ports listed in cfg.txt\n \
             with open('Firmware\\template\\blank.bin', 'w',encoding='utf-8' ) as bln:
                 bln.close()
             firmware_directory_gone = 1
-        self.firmwareBox.select_set(0)
+        self.firmwareBox.selection_clear(0)
         self.firmwareLabel.pack()
         self.firmwareBox.pack()
 
@@ -378,12 +377,30 @@ are labelled with both COM ports listed in cfg.txt\n \
 
     ### Trigger function for START button which begins/continues each Station thread
     def startUpload(self):
-        self.setupFirmwareMap()
-        #arduino.write("N".encode())
-        for stat in self.stations:
-            stat.startTime = time.time()
-            if not stat.thread.is_alive():
-                stat.createNewThread()
+        if self.checkSelections():
+            self.setupFirmwareMap()
+            #arduino.write("N".encode())
+            for stat in self.stations:
+                stat.startTime = time.time()
+                if not stat.thread.is_alive():
+                    stat.createNewThread()
+
+    ### Function to make sure all necessary selections are made
+    def checkSelections(self):
+        firmwareMessage = "\nPlease select firmware to be loaded"
+        deviceMessage = "\nPlease select a device type"
+        firmwareSuccess = len(self.firmwareBox.curselection())
+        deviceSuccess = device.get() != "None"
+        if firmwareSuccess and deviceSuccess:
+            return True
+        else:
+            message = ""
+            if not firmwareSuccess:
+                message += firmwareMessage
+            if not deviceSuccess:
+                message += deviceMessage
+            messagebox.showinfo("Error", message)
+
 
 ### Instantiate the root window and start the Application
 if __name__ == "__main__":
