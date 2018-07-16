@@ -33,7 +33,7 @@ flash_map = [['0' for x in range(2)] for y in range(6)]
 ### class which details the specifics of each individual station programming
 ### threaded such that multiple Station instances can run simultaneously
 #arduino = serial.Serial("COM18", 9600, timeout = .1)
-sleep(3)
+sleep(.5)
 class Station():
     def __init__(self, parent, com_, stat_num):
         self.thread = threading.Thread(target = self.process)
@@ -258,8 +258,11 @@ class Application:
 are labelled with both COM ports listed in cfg.txt\n \
             - Click START to begin the upload', pady = 5)
         devices = getCOMPorts()
+        semaphore = open("semaphore.txt", "w+", encoding = "utf-8")
+        semaphore.write("write")
+        semaphore.close()
         # Size of window based on how many stations are present
-        root_width = max(700, (len(devices) - 1) * 205)
+        root_width = max(300, (len(devices)) * 205)
         self.parent.geometry(str(root_width) + "x900+0+0")
         devicesLoaded = tk.Label(self.frame, text = ("Devices Loaded: " + str(loaded.get())).ljust(10), pady = 10)
         self.buttonFrame = tk.Frame(self.frame)
