@@ -14,6 +14,7 @@ from multiprocessing import Queue, Process
 import re
 from tkinter.filedialog import askopenfilename
 
+lbmessage = ""
 ### Helper function for reading serial words
 def readSerialWord(ser_port):
     char = '0'
@@ -108,7 +109,7 @@ class Station():
             for file in flash_map:
                 if file[1]:
                     numFilesToWrite += 1
-            if check_load.count("OK") == 4:
+            if check_load.count("OK") == numFilesToWrite:
                 addTextToLabel(self.explanation, "\nSuccessful Load")
                 addTextToLabel(self.explanation, "\nFinished in " + str(round((time.time() - self.startTime), 2)) + " sec")
                 return 0
@@ -123,7 +124,7 @@ class Station():
     # TODO: log errors correctly with serial number for identification
     def log_run(self):
         # Only log is some sort of upload was attempted
-        log_str = "|" + str(datetime.datetime.now()) + " " + str(self.mac) + " " + str(device.get())
+        log_str = "|" + str(datetime.datetime.now()) + " " + str(self.mac) + " " + str(device.get()) + " " + lbmessage
         if self.flash_fail:
             log_str += "  FAIL  |\n"
             #log_filename = r"Log\fail.txt"
@@ -346,6 +347,8 @@ are labelled with both COM ports listed in cfg.txt\n \
         self.parent.configure(menu = menubar)
 
     def setupFirmwareMap(self):
+        global lbmessage
+
         lbindex = self.firmwareBox.curselection()
         try:
             lbmessage = self.firmwareBox.get(lbindex)

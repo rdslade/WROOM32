@@ -1,0 +1,8 @@
+0x0 boot_v1.5.bin
+0x1000 user1.bin
+0x81000 user2.bin
+0x1fc000 esp_init_data_default.bin
+0x1fe000 blank.bin
+0xfc000 webpages.espfs
+0x177000 webpages.espfs
+0x1f2000 blank.bin

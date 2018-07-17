@@ -20,12 +20,11 @@ def openFromFileName(filename):
         for line in input.readlines():
             cfg.write(line)
         input.close()
-    cfg.close() 
+    cfg.close()
     subprocess.Popen(["py", "main.py"])
 
 if __name__ == "__main__":
     filenames = os.listdir(subDir)
     for filename in filenames:
         if "cfg" in filename:
-            print(filename)
             openFromFileName(filename)

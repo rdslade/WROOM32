@@ -1,4 +1,0 @@
-List ports one per line
-COM4
-COM5
-COM6
