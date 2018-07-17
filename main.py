@@ -12,6 +12,7 @@ import datetime
 import threading
 from multiprocessing import Queue, Process
 import re
+import ctypes
 from tkinter.filedialog import askopenfilename
 
 lbmessage = ""
@@ -56,9 +57,9 @@ class Station():
         self.station_label = tk.Label(self.setup, text = self.com.get())
 
         self.statusSpace = tk.LabelFrame(self.frame, width = 200, height = 250)
-        self.currentStatus = tk.Label(self.statusSpace, text = "", width = 25, pady = 10)
-        self.progressBar = ttk.Progressbar(self.statusSpace, mode = 'determinate', length = 125)
-        self.explanation = tk.Label(self.statusSpace, text = "", width = 25, pady = 10)
+        self.currentStatus = tk.Label(self.statusSpace, text = "", width = 20, pady = 10)
+        self.progressBar = ttk.Progressbar(self.statusSpace, mode = 'determinate', length = 100)
+        self.explanation = tk.Label(self.statusSpace, text = "", width = 20, pady = 10)
         self.startTime = 0;
 
     ### Loads objects into correct places
@@ -73,7 +74,7 @@ class Station():
         self.currentStatus.pack()
         self.progressBar.pack()
         self.explanation.pack()
-        self.frame.pack(side = tk.LEFT, padx = 10)
+        self.frame.pack(side = tk.LEFT, padx = 2.5)
 
     ### Checks device is accessible and retrieves MAC
     def runMACCommand(self):
@@ -261,9 +262,13 @@ are labelled with both COM ports listed in cfg.txt\n \
         semaphore = open("semaphore.txt", "w+", encoding = "utf-8")
         semaphore.write("write")
         semaphore.close()
-        # Size of window based on how many stations are present
-        root_width = max(300, (len(devices)) * 205)
-        self.parent.geometry(str(root_width) + "x900+0+0")
+        ### Get screen resolution metrics
+        user32 = ctypes.windll.user32
+        screenWidth = user32.GetSystemMetrics(0)
+        screenHeight = user32.GetSystemMetrics(1)
+        i = int(sys.argv[1])
+        xpos = i * (screenWidth/2)
+        self.parent.geometry(str(int(screenWidth/2)) + "x" + str(screenHeight) + "+" + str(int(xpos)) + "+0")
         devicesLoaded = tk.Label(self.frame, text = ("Devices Loaded: " + str(loaded.get())).ljust(10), pady = 10)
         self.buttonFrame = tk.Frame(self.frame)
         self.clearCounter = tk.Button(self.buttonFrame, text = "Clear Counter", width = 15, bg = gridColor, height = 2, command = clearDevCounter)
