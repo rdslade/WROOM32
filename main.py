@@ -74,7 +74,8 @@ class Station():
         self.currentStatus.pack()
         self.progressBar.pack()
         self.explanation.pack()
-        self.frame.pack(side = tk.LEFT, padx = 2.5)
+        # self.frame.pack(side = tk.LEFT, padx = 2.5)
+        self.frame.pack(side = tk.LEFT, fill = tk.Y, padx = 2.5)
 
     ### Checks device is accessible and retrieves MAC
     def runMACCommand(self):
@@ -185,9 +186,9 @@ def addTextToLabel(label, textToAdd):
     label.configure(text = label.cget("text") + textToAdd);
 
 ### Read COM ports from config file and returned organized lists of ports
-def getCOMPorts():
+def getCOMPorts(fixNum):
     devices = []
-    with open("cfg.txt", 'r+', encoding = 'utf-8') as cfg:
+    with open("prodCfg/cfg" + str(fixNum) + ".txt", 'r+', encoding = 'utf-8') as cfg:
         cfg.readline()
         port = []
         for line in cfg.readlines():
@@ -233,13 +234,12 @@ def getCOMProblem(e, stat):
 ### High level applications which includes all relevant pieces and instances of
 ### Station class and other widgets
 class Application:
-    def __init__(self, parent):
+    def __init__(self, parent, fixNum, mode_):
         global loaded, devicesLoaded, device
         # self.communicationThread = threading.Thread(target = self.testMessages)
         # completeIndSend = IntVar()
         # completeIndSend.set(0)
         # completeIndSend.trace('w', self.updateComVar)
-
         loaded = IntVar()
         loaded.set(getNumDevicesLoaded())
         loaded.trace("w", updateDevicesLoaded)
@@ -250,6 +250,7 @@ class Application:
         s.configure("red.Horizontal.TProgressbar", foreground='red', background='red')
         s.configure("green.Horizontal.TProgressbar", foreground='green', background='green')
         self.parent = parent
+        self.fixNum = fixNum
         self.parent.title("WROOM-xx Programmer")
         self.stations = []
         self.frame = tk.Frame(self.parent)
@@ -258,37 +259,40 @@ class Application:
         self.instructions = tk.Label(self.frame, text = '- Programming stations \
 are labelled with both COM ports listed in cfg.txt\n \
             - Click START to begin the upload', pady = 5)
-        devices = getCOMPorts()
-        semaphore = open("semaphore.txt", "w+", encoding = "utf-8")
-        semaphore.write("write")
-        semaphore.close()
+        devices = getCOMPorts(int(self.fixNum) - 1)
+        self.mode = mode_
         ### Get screen resolution metrics
         user32 = ctypes.windll.user32
         screenWidth = user32.GetSystemMetrics(0)
         screenHeight = user32.GetSystemMetrics(1)
-        i = int(sys.argv[1])
-        xpos = i * (screenWidth/2)
-        self.parent.geometry(str(int(screenWidth/2)) + "x" + str(screenHeight) + "+" + str(int(xpos)) + "+0")
+        height = screenHeight
+        if self.mode == "prod":
+            height /= 2
+        else:
+            height /= 1.5
+        xpos = (self.fixNum - 1) * (screenWidth/2)
+        self.parent.geometry(str(int(screenWidth/2)) + "x" + str(int(height)) + "+" + str(int(xpos)) + "+0")
         devicesLoaded = tk.Label(self.frame, text = ("Devices Loaded: " + str(loaded.get())).ljust(10), pady = 10)
         self.buttonFrame = tk.Frame(self.frame)
         self.clearCounter = tk.Button(self.buttonFrame, text = "Clear Counter", width = 15, bg = gridColor, height = 2, command = clearDevCounter)
-        self.start = tk.Button(self.buttonFrame, text = "START", width = 22, bg = gridColor, height = 3, command = self.startUpload)
-        # self.changePermissions = tk.Button(self.buttonFrame, text = "Switch Advanced/Production", command = changePermissions, width = 22, bg = gridColor, height = 2)
-        # self.configureModeOptions()
-        # self.configureDeviceOptions()
+        # self.start = tk.Button(self.buttonFrame, text = "START", width = 22, bg = gridColor, height = 3, command = self.startUpload, state = tk.DISABLED)
         self.configureFirmwareSelection()
         self.createDeviceOptions()
         self.packObjects()
         # d[0] is common port; begin Station initalization at 1, passing in unique station id
         for d in range(0, len(devices)):
-            self.stations.append(Station(root, devices[d], d))
+            self.stations.append(Station(parent, devices[d], d))
 
     def createDeviceOptions(self):
         self.deviceFrame = tk.Frame(self.frame)
+        # self.device = StringVar()
         w02 = tk.Radiobutton(self.deviceFrame, text = "WROOM-02", variable = device, value = "WROOM-02")
         w32 = tk.Radiobutton(self.deviceFrame, text = "WROOM-32", variable = device, value = "WROOM-32")
-        w02.pack()
-        w32.pack()
+        if self.mode == "prod":
+            device.set("WROOM-02")
+        else:
+            w02.pack()
+            w32.pack()
 
     ### Places objects on screen in correct format
     def packObjects(self):
@@ -297,7 +301,7 @@ are labelled with both COM ports listed in cfg.txt\n \
         self.instructions.pack()
         self.firmwareFrame.pack(side = tk.LEFT)
         self.clearCounter.pack(pady = 5)
-        self.start.pack()
+        # self.start.pack()
         self.buttonFrame.pack(side = tk.LEFT, padx = 20)
         devicesLoaded.pack(side = tk.RIGHT)
         self.deviceFrame.pack(side = tk.RIGHT, padx = 20)
@@ -305,7 +309,7 @@ are labelled with both COM ports listed in cfg.txt\n \
     def configureFirmwareSelection(self):
         self.firmwareFrame = tk.Frame(self.frame)
         self.firmwareLabel = tk.Label(self.firmwareFrame, text = "Please select a firmware file: ")
-        self.firmwareBox = tk.Listbox(self.firmwareFrame)
+        self.firmwareBox = tk.Listbox(self.firmwareFrame, exportselection = False)
         firmware_directory_gone = 0
         try:
             check_firmware = subprocess.check_output('dir Firmware /b', shell=True)
@@ -331,9 +335,13 @@ are labelled with both COM ports listed in cfg.txt\n \
             with open('Firmware\\template\\blank.bin', 'w',encoding='utf-8' ) as bln:
                 bln.close()
             firmware_directory_gone = 1
-        self.firmwareBox.selection_clear(0)
-        self.firmwareLabel.pack()
-        self.firmwareBox.pack()
+        if self.mode == "prod":
+            self.firmwareBox.selection_set("end")
+            self.firmwareBox.configure(selectmode = tk.MULTIPLE)
+        else:
+            self.firmwareBox.selection_clear(0)
+            self.firmwareLabel.pack()
+            self.firmwareBox.pack()
 
     ### Create and "pack" menu for main root window
     def configureMenu(self):
@@ -410,8 +418,39 @@ are labelled with both COM ports listed in cfg.txt\n \
             messagebox.showinfo("Error", message)
 
 
+class serialThread:
+    def __init__(self, serial):
+        self.running = True
+        self.ser = serial
+        self.thread = threading.Thread(target = self.tar)
+
+    def tar(self):
+        while self.running:
+            ch = self.ser.read(1)
+            if ch == b'!':
+                pass
+                # print("Fixture 2 opens")
+            elif ch == b' ':
+                # print("Fixture 2 closes")
+                a2.startUpload()
+            elif ch == b'\x11':
+                pass
+                # print("Fixture 1 opens")
+            elif ch == b'\x10':
+                # print("Fixture 1 closes")
+                a1.startUpload()
+
 ### Instantiate the root window and start the Application
 if __name__ == "__main__":
+    mode = sys.argv[1]
     root = tk.Tk()
-    a1 = Application(root)
-    root.mainloop()
+    a1 = Application(root, 1, mode)
+
+    top = tk.Toplevel()
+    a2 = Application(top, 2, mode)
+
+    buttonSer = serial.Serial("COM31", baudrate = 115200)
+    serThread = serialThread(buttonSer)
+    serThread.thread.start()
+
+    top.mainloop()
