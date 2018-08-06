@@ -1,5 +1,5 @@
 # WROOM_Flash
-A tool for flashing Espressif WROOM[xx] chips
+A tool for flashing ESP32 and ESP8266 chips
 
 ## Installation
 ### Using git clone
