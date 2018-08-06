@@ -1,5 +1,2 @@
 List ports one per line
-COM29
-COM28
-COM30
-COM22
+COM24

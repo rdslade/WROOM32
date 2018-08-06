@@ -442,7 +442,10 @@ class serialThread:
 
 ### Instantiate the root window and start the Application
 if __name__ == "__main__":
-    mode = sys.argv[1]
+    if len(sys.argv) > 1:
+        mode = sys.argv[1]
+    else:
+        mode = "normal"
     root = tk.Tk()
     a1 = Application(root, 1, mode)
 
