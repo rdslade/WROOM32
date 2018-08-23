@@ -1,2 +1,5 @@
 List ports one per line
-COM25
+COM20
+COM19
+COM18
+COM21

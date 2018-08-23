@@ -231,6 +231,12 @@ def getCOMProblem(e, stat):
     addTextToLabel(stat.explanation, "\nCould not open " + com_problem)
     return 1
 
+def getButtonSer():
+    with open("prodCfg/button_serial.txt", "r", encoding = "utf-8") as buttonFile:
+        port = buttonFile.readline()
+        buttonFile.close()
+    return port
+
 ### High level applications which includes all relevant pieces and instances of
 ### Station class and other widgets
 class Application:
@@ -452,7 +458,9 @@ if __name__ == "__main__":
     top = tk.Toplevel()
     a2 = Application(top, 2, mode)
 
-    buttonSer = serial.Serial("COM31", baudrate = 115200)
+
+    buttonSerPort = getButtonSer()
+    buttonSer = serial.Serial(buttonSerPort, baudrate = 115200)
     serThread = serialThread(buttonSer)
     serThread.thread.start()
 
